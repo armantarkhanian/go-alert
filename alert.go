@@ -5,21 +5,19 @@ type AlertManager interface {
 }
 
 type AlertInstance struct {
-	alerters []AlertManager
+	alertManagers []AlertManager
+}
+
+func New() *AlertInstance {
+	return &AlertInstance{}
 }
 
 func (a *AlertInstance) Send(message string) error {
-	for _, alerter := range a.alerters {
+	for _, alerter := range a.alertManagers {
 		if err := alerter.Alert(message); err != nil {
 			return err
 		}
 	}
 
 	return nil
-}
-
-func New(alerters ...AlertManager) *AlertInstance {
-	return &AlertInstance{
-		alerters: alerters,
-	}
 }

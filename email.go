@@ -31,11 +31,16 @@ func (t *EmailAlerter) Alert(message string) error {
 	)
 }
 
-func Email(host, from, password string, to []string) *EmailAlerter {
-	return &EmailAlerter{
+func (a *AlertInstance) Email(host, from, password string, to []string) *AlertInstance {
+	if len(to) == 0 {
+		return a
+	}
+
+	a.alertManagers = append(a.alertManagers, &EmailAlerter{
 		host:     host,
 		from:     from,
 		password: password,
 		to:       to,
-	}
+	})
+	return a
 }
