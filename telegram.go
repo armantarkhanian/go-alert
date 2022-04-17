@@ -26,15 +26,3 @@ func (t *TelegramAlerter) Alert(message string) error {
 
 	return nil
 }
-
-func (a *AlertInstance) Telegram(botToken string, chatIDs []int64) *AlertInstance {
-	if len(chatIDs) == 0 {
-		return a
-	}
-
-	a.alertManagers = append(a.alertManagers, &TelegramAlerter{
-		chatIDs:  chatIDs,
-		botToken: botToken,
-	})
-	return a
-}
